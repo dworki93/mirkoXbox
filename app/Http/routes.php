@@ -16,7 +16,11 @@ Route::group(['middleware' => ['web']], function () {
 
     Route::get('/', 'UserController@index');
 
-    Route::get('/login', 'Auth\AuthController@authenticate');
+    Route::get('/login', 'LoginController@login');
+
+    Route::get('/logout', 'LoginController@logout');
+
+    Route::get('/loginLink', 'LoginController@getLoginLink');
 
 
 });

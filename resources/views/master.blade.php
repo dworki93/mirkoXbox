@@ -25,7 +25,7 @@
                 <li><a href="#">Edytuj profil</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="{{ $loginLink }}"><i class="fa fa-sign-in"></i> Zaloguj się przez Wypok</a></li>
+                <li><a href="/loginLink"><i class="fa fa-sign-in"></i> Zaloguj się przez Wypok</a></li>
             </ul>
         </div>
     </nav>

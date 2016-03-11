@@ -6,13 +6,15 @@ use App\User;
 use App\Http\Controllers\Controller;
 use App\Libraries\libs_Wapi;
 use Illuminate\Support\Facades\Config;
-
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Auth\ThrottlesLogins;
+use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 
 
 class AuthController extends Controller
 {
 
-
+    use AuthenticatesAndRegistersUsers, ThrottlesLogins;
 
     /**
      * Where to redirect users after login / registration.
@@ -24,8 +26,7 @@ class AuthController extends Controller
 
     public function __construct()
     {
-        //$this->middleware('auth');
-        $this->middleware($this->guestMiddleware(), ['except' => 'logout']);
+        //$this->middleware($this->guestMiddleware(), ['except' => 'logout']);
         $key = Config::get('wykop.key');
         $secret = Config::get('wykop.secret');
         $this->wapi = new libs_Wapi($key, $secret);
@@ -33,6 +34,10 @@ class AuthController extends Controller
 
     public function authenticate()
     {
+        if (Auth::check())
+        {
+            redirect()->intended('/');
+        }
         if (!empty($_GET['connectData']))
         {
             $connectData = $this->wapi->handleConnectData();
@@ -51,6 +56,7 @@ class AuthController extends Controller
                     $user -> wykopNick = $result['login'];
                     $user -> avatar = $result['avatar'];
                     $user->save();
+                    Auth::login($user);
                     //return redirect()->intended('dashboard');
                 }
             }

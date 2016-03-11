@@ -9,6 +9,8 @@
 namespace App\Libraries;
 
 
+use Illuminate\Support\Facades\Input;
+
 class libs_Wapi
 {
     protected $userAgent = 'WykopAPI';
@@ -119,13 +121,15 @@ class libs_Wapi
      *
      * @return array - tablica z danymi connecta (appkey, login, token) - wykorzystywane później do logowania
      */
-    public function handleConnectData()
+    public function handleConnectData($connectData)
     {
-        if (!empty($_GET['connectData']))
+        /*if (!empty($_GET['connectData']))
         {
             $data = base64_decode($_GET['connectData']);
             return json_decode($data, true);
-        }
+        }*/
+        $data = base64_decode($connectData);
+        return json_decode($data, true);
     }
 
     protected function checkIsValid(&$result)
