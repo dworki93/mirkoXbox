@@ -61,7 +61,7 @@ class LoginController extends Controller
             $userData = $this->authenticateWithWykop(Input::get('connectData'));
             $user = $this->findOrAddUser($userData);
             Auth::login($user);
-            echo 'zalogowany';
+            return redirect('/');
         }
     }
 

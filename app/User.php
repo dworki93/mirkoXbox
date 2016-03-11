@@ -12,7 +12,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'wykopNick', 'xboxNick', 'games', 'description', 'age', 'avatar', 'platform',
+        'wykopNick', 'age', 'avatar',
     ];
 
     /**
@@ -23,4 +23,9 @@ class User extends Authenticatable
     protected $hidden = [
         'remember_token',
     ];
+
+    public function platforms()
+    {
+        return $this->hasMany('App\Platform');
+    }
 }

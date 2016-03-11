@@ -11,10 +11,22 @@
 |
 */
 
+
+
 Route::group(['middleware' => ['web']], function () {
 
+    Route::group(['middleware' => 'auth'], function () {
 
-    Route::get('/', 'UserController@index');
+        Route::get('/profile/edit', 'UserController@edit');
+
+        Route::post('/platform/add', 'PlatformController@add');
+    });
+
+    Route::get('platform/{name}', 'PlatformController@index');
+
+    Route::get('', 'PlatformController@index');
+
+
 
     Route::get('/login', 'LoginController@login');
 
