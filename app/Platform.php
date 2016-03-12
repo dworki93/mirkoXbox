@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 class Platform extends Model
 {
     protected $fillable = [
-        'active', 'platformNick', 'games', 'description', 'platform'
+        'active', 'nick', 'games', 'info', 'type'
     ];
 
     protected $hidden = ['user_id'];
@@ -18,24 +18,24 @@ class Platform extends Model
         return $this->belongsTo('App\User');
     }
 
-    static public function findOrAdd($user, $platformName)
+    public static function findOrAdd($user, $platformName)
     {
         $platform = Platform::where('user_id', $user->id)
-            ->where('platform', $platformName)->first();
+            ->where('type', $platformName)->first();
         if (!$platform)
         {
             $platform = new Platform();
             $platform->user_id = $user->id;
             $platform->active = 0;
-            $platform->platform = $platformName;
+            $platform->type = $platformName;
             $platform->save();
         }
     }
 
-    static public function deleteIfExists($user, $platformName)
+    public static function deleteIfExists($user, $platformName)
     {
         $platform = Platform::where('user_id', $user->id)
-            ->where('platform', $platformName)->first();
+            ->where('type', $platformName)->first();
         if ($platform)
             $platform->delete();;
     }

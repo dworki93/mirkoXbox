@@ -19,7 +19,11 @@ Route::group(['middleware' => ['web']], function () {
 
         Route::get('/profile/edit', 'UserController@edit');
 
+        Route::post('/profile/edit/age', 'UserController@editAge');
+
         Route::post('/platform/add', 'PlatformController@add');
+
+        Route::post('/platform/edit', 'PlatformController@edit');
     });
 
     Route::get('platform/{name}', 'PlatformController@index');
@@ -34,5 +38,9 @@ Route::group(['middleware' => ['web']], function () {
 
     Route::get('/loginLink', 'LoginController@getLoginLink');
 
+    Route::any('{all}', function()
+    {
+        return redirect()->action('PlatformController@index');
+    });
 
 });

@@ -15,28 +15,37 @@
 
 </head>
 <body>
-    <nav class="navbar navbar-inverse">
+    <nav class="navbar navbar-inverse" role="navigation">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" href="#">MirkoBox</a>
+                <button type="button" class ="navbar-toggle"
+                        data-toggle="collapse" data-target = "#menu-navbar-collapse">
+                    <span class = "icon-bar"></span>
+                    <span class = "icon-bar"></span>
+                    <span class = "icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">MirkoBox</a>
             </div>
-            <ul class="nav navbar-nav">
-                <li><a href="/platform/xone">Xbox one</a></li>
-                <li><a href="/platform/x360">Xbox 360</a></li>
-                <li><a href="/platform/ps4">Ps4</a></li>
-                <li><a href="/platform/ps3">Ps3</a></li>
-                <li><a href="/platform/steam">Steam</a></li>
-                @if(Auth::check())
-                    <li><a href="/profile/edit">Edytuj profil</a></li>
-                @endif
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                @if(Auth::check())
-                    <li><a href="/logout"><i class="fa fa-sign-out"></i>{{ Auth::user()->wykopNick }}</a></li>
-                @else
-                    <li><a href="/loginLink"><i class="fa fa-sign-in"></i> Zaloguj się przez Wypok</a></li>
-                @endif
-            </ul>
+
+            <div class="collapse navbar-collapse" id="menu-navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="/platform/xone">Xbox one</a></li>
+                    <li><a href="/platform/x360">Xbox 360</a></li>
+                    <li><a href="/platform/ps4">Ps4</a></li>
+                    <li><a href="/platform/ps3">Ps3</a></li>
+                    <li><a href="/platform/steam">Steam</a></li>
+                    @if(Auth::check())
+                        <li><a href="/profile/edit">Edytuj profil</a></li>
+                    @endif
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    @if(Auth::check())
+                        <li><a href="/logout"><i class="fa fa-sign-out"></i>{{ Auth::user()->wykopNick }}</a></li>
+                    @else
+                        <li><a href="/loginLink"><i class="fa fa-sign-in"></i> Zaloguj się przez Wypok</a></li>
+                    @endif
+                </ul>
+            </div>
         </div>
     </nav>
     <div class="container">@yield('content')</div>

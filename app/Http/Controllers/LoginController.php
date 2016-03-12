@@ -24,19 +24,6 @@ class LoginController extends Controller
         $this->wapi = new libs_Wapi($key, $secret);
     }
 
-    public function findOrAddUser($userData)
-    {
-        $user = User::where('wykopNick', $userData['login'])->first();
-        if (!$user)
-        {
-            $user = new User();
-            $user->wykopNick = $userData['login'];
-            $user->avatar = $userData['avatar'];
-            $user->save();
-        }
-        return $user;
-    }
-
     public function authenticateWithWykop($connectData)
     {
         $postData = $this->wapi->handleConnectData($connectData);
@@ -59,7 +46,7 @@ class LoginController extends Controller
         else
         {
             $userData = $this->authenticateWithWykop(Input::get('connectData'));
-            $user = $this->findOrAddUser($userData);
+            $user = User::findOrAddUser($userData);
             Auth::login($user);
             return redirect('/');
         }

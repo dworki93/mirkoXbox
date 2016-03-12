@@ -9,18 +9,18 @@
         <div class="col-sm-4">
             <div class="panel panel-default">
                 <div class="panel-heading">Profil</div>
-                <form>
+                <form method="post" action="{{ action('UserController@editAge') }}">
                     <div class="userForms">
                         <div class="form-group">
                             <label for="age">Wiek:</label>
-                            <input type="number" class="form-control" id="age" value="{{ $user->age }}">
+                            <input type="number" class="form-control" name="age" id="age" value="{{ $user->age }}"
+                                   min="0" max="100" required>
                         </div>
+                        {!! csrf_field() !!}
                         <button type="submit" class="btn btn-default">Aktualizuj</button>
                     </div>
                 </form>
             </div>
-        </div>
-        <div class="col-sm-4">
             <div class="panel panel-default">
                 <div class="panel-heading">Platformy</div>
                 <form method="post" action="{{ action('PlatformController@add') }}">
@@ -65,8 +65,6 @@
                     </div>
                 </form>
             </div>
-        </div>
-        <div class="col-sm-4">
             <div class="panel panel-danger">
                 <div class="panel-heading">Usuń konto</div>
                 <div class="userForms">
@@ -79,38 +77,56 @@
                 </div>
             </div>
         </div>
-        @foreach($platforms as $platform)
-        <div class="col-sm-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">{{ $platform['platform'] }}</div>
-                <div class="userForms">
-                    <form>
-                        <div class="form-group">
-                            <label for="nick">Nick:</label>
-                            <input type="text" class="form-control" id="nick" value="{{ $platform->platformNick }}">
-                        </div>
-                        <div class="form-group">
-                            <label for="games">Gry:</label>
-                            <textarea name="games" id="games" class="form-control">{{ $platform->games }}</textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="description">Info:</label>
-                            <textarea name="description" id="description" class="form-control">{{ $platform->description }}</textarea>
-                        </div>
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" name="active"
-                                       @if($platform->description) checked="checked"@endif>
-                                Aktywny
-                            </label>
-                        </div>
-                        <div class="userForms">
-                            <button type="submit" class="btn btn-default">Aktualizuj</button>
-                        </div>
-                    </form>
+        @if(count($platforms) > 0)
+            <div class="col-sm-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Platformy</div>
+                    <ul class="nav nav-tabs">
+                        <?php $i = 0; ?>
+                        @foreach($platforms as $platform)
+                            <li @if($i == 0) class="active" @endif><a data-toggle="tab" href="#{{ $platform->platform }}">{{ $platform->platform }}</a></li>
+                            <?php $i++; ?>
+                        @endforeach
+                    </ul>
+                    <div class="tab-content">
+                        <?php $i = 0; ?>
+                        @foreach($platforms as $platform)
+                            <div id="{{ $platform->platform }}" class="tab-pane fade @if($i == 0) in active @endif">
+                                <div class="userForms">
+                                    <form method="post" action="/platform/edit">
+                                        <div class="form-group">
+                                            <label for="nick">Nick:</label>
+                                            <input type="text" class="form-control" id="nick" name="nick" value="{{ $platform->platformNick }}"
+                                                   maxlength="100" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="games">Gry:</label>
+                                            <textarea id="games" class="form-control" name="games" maxlength="255">{{ $platform->games }}</textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="info">Info:</label>
+                                            <textarea id="info" class="form-control" name="info" maxlength="255">{{ $platform->description }}</textarea>
+                                        </div>
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" name="active"
+                                                       @if($platform->description) checked="checked"@endif>
+                                                Aktywny
+                                            </label>
+                                        </div>
+                                        {!! csrf_field() !!}
+                                        <input name="platform_id" type="hidden" value="{{ $platform->id }}">
+                                        <div class="userForms">
+                                            <button type="submit" class="btn btn-default">Aktualizuj</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <?php $i++; ?>
+                        @endforeach
+                    </div>
                 </div>
             </div>
-        </div>
-        @endforeach
+        @endif
     </div>
 @endsection

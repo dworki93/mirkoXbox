@@ -12,7 +12,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'wykopNick', 'age', 'avatar',
+        'nick', 'age', 'avatar',
     ];
 
     /**
@@ -27,5 +27,18 @@ class User extends Authenticatable
     public function platforms()
     {
         return $this->hasMany('App\Platform');
+    }
+
+    public static function findOrAddUser($userData)
+    {
+        $user = User::where('wykopNick', $userData['login'])->first();
+        if (!$user)
+        {
+            $user = new User();
+            $user->nick = $userData['login'];
+            $user->avatar = $userData['avatar'];
+            $user->save();
+        }
+        return $user;
     }
 }

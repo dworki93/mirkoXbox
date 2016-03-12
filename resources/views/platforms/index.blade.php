@@ -23,13 +23,13 @@
                     <tbody>
                         @foreach ($platforms as $platform)
                             <tr>
-                                <td><img src="{{$platform->user->avatar}}"></td>
+                                <td style="max-width: 50px;"><img src="{{$platform->user->avatar}}"></td>
                                 <td>
                                     <a href="http://www.wykop.pl/ludzie/{{ $platform->user->wykopNick }}/">
                                         {{ $platform->user->wykopNick }}
                                     </a>
                                 </td>
-                                <td>{{ $platform->user->age }}</td>
+                                <td style="max-width: 50px;">{{ $platform->user->age }}</td>
                                 <td>{{ $platform->platformNick }}</td>
                                 <td>{{ $platform->games }}</td>
                                 <td>{{ $platform->description }}</td>

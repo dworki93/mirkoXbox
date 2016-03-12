@@ -16,10 +16,10 @@ class CreatePlatformsTable extends Migration
             $table->increments('id');
             $table->integer('user_id');
             $table->integer('active');
-            $table->string('platformNick')->nullable();
-            $table->string('games', 400)->nullable();
-            $table->string('description', 400)->nullable();
-            $table->string('platform', 10);
+            $table->string('nick', 100)->nullable();
+            $table->string('games')->nullable();
+            $table->string('info')->nullable();
+            $table->string('type', 10);
             $table->timestamps();
         });
     }

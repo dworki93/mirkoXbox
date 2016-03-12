@@ -48,4 +48,28 @@ class PlatformController extends Controller
 
         return redirect('profile/edit');
     }
+
+    public function edit(Request $request)
+    {
+        $this->validate($request, [
+            'id' => 'required|numeric',
+            'nick' => 'required|max:100',
+            'games' => 'max:255',
+            'info' => 'max:255'
+        ]);
+        $user = Auth::user();
+        $platform = Platform::findOrFail($request->id);
+        if($platform->user_id == $user->id)
+        {
+            $platform->nick = $request->nick;
+            $platform->games = $request->games;
+            $platform->info = $request->info;
+            if(Input::has('active'))
+                $platform->active = 1;
+            else
+                $platform->active = 0;
+            $platform->save();
+        }
+        return redirect('profile/edit');
+    }
 }

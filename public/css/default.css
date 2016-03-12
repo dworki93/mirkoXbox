@@ -5,7 +5,7 @@
 #gamersTable td
 {
     word-wrap: break-word;
-    min-width: 160px;
+    min-width: 50px;
     max-width: 160px;
     white-space: normal;
 }
@@ -13,4 +13,9 @@
 .userForms
 {
     padding: 20px;
+}
+
+.nav-tabs > li {
+    margin-left: 10px;
+    margin-top: 10px;
 }

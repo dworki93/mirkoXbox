@@ -7,6 +7,7 @@ use App\Http\Requests;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Input;
 
 
 class UserController extends Controller
@@ -23,6 +24,17 @@ class UserController extends Controller
             $usingPlatforms[$platform['platform']] = true;
 
         return view('users.edit', ['user'=>$user, 'platforms'=>$platforms, 'usingPlatforms'=>$usingPlatforms]);
+    }
+
+    public function editAge(Request $request)
+    {
+        $this->validate($request, ['age' => 'required|numeric|between:0,100']);
+
+        $user = Auth::user();
+        $user->age = $request->age;
+        $user->save();
+
+        return redirect('profile/edit');
     }
 
 }
